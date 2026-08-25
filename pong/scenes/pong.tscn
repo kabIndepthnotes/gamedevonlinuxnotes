@@ -2,18 +2,19 @@
 
 [ext_resource type="Script" uid="uid://4gkbfk7blf23" path="res://scripts/pong.gd" id="1_7aeas"]
 [ext_resource type="Script" uid="uid://bxvs8mqucvvg4" path="res://scripts/ball.gd" id="1_nth8n"]
-[ext_resource type="Texture2D" uid="uid://chvsu0af2ufge" path="res://icon.svg" id="2_5420t"]
+[ext_resource type="Texture2D" uid="uid://lydtjv7fory5" path="res://assets/bg.png" id="2_me32k"]
+[ext_resource type="Texture2D" uid="uid://jmhd8ppgwxg5" path="res://assets/ball.png" id="3_7q0or"]
 [ext_resource type="Script" uid="uid://lx56yvme7uv5" path="res://scripts/paddle.gd" id="3_ik6sa"]
 [ext_resource type="Script" uid="uid://bkcw3eoqv5y3g" path="res://scripts/wall.gd" id="4_ploue"]
+[ext_resource type="Texture2D" uid="uid://c65wh3l2lde4x" path="res://assets/paddle.png" id="5_7q0or"]
 [ext_resource type="Script" uid="uid://cbjpuiy4hgkeo" path="res://scripts/ceiling_floor.gd" id="5_60vo6"]
+[ext_resource type="AudioStream" uid="uid://0243qqq3kru4" path="res://assets/pong_game_main_theme-consolidated.wav" id="7_1gkem"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ftxu3"]
+size = Vector2(29, 30)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5420t"]
-size = Vector2(20, 130)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ik6sa"]
-size = Vector2(20, 130)
+size = Vector2(30, 120)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ploue"]
 size = Vector2(35.25, 782.25)
@@ -30,42 +31,45 @@ size = Vector2(790.8125, 26.25)
 [node name="Pong" type="Node2D" unique_id=175799028]
 script = ExtResource("1_7aeas")
 
+[node name="Bg" type="Sprite2D" parent="." unique_id=181208326]
+position = Vector2(382, 371)
+texture = ExtResource("2_me32k")
+
 [node name="Ball" type="Area2D" parent="." unique_id=1390451979]
-position = Vector2(393, 369)
+position = Vector2(380, 354)
 script = ExtResource("1_nth8n")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ball" unique_id=1521933680]
+position = Vector2(4.5, 2)
 shape = SubResource("RectangleShape2D_ftxu3")
 
 [node name="Sprite2D" type="Sprite2D" parent="Ball" unique_id=813315046]
 position = Vector2(4.499998, 2.5)
-scale = Vector2(0.2421875, 0.24218751)
-texture = ExtResource("2_5420t")
+texture = ExtResource("3_7q0or")
 
 [node name="Left" type="Area2D" parent="." unique_id=1764898869]
 position = Vector2(31, 367)
 script = ExtResource("3_ik6sa")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Left" unique_id=193598741]
-position = Vector2(1, -7)
+position = Vector2(1, -6)
 shape = SubResource("RectangleShape2D_5420t")
 
 [node name="Sprite2D" type="Sprite2D" parent="Left" unique_id=1549554069]
 position = Vector2(1, -6)
-scale = Vector2(0.171875, 1)
-texture = ExtResource("2_5420t")
+texture = ExtResource("5_7q0or")
 
 [node name="Right" type="Area2D" parent="." unique_id=347042267]
 position = Vector2(715, 375)
 script = ExtResource("3_ik6sa")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Right" unique_id=1382624935]
-shape = SubResource("RectangleShape2D_ik6sa")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Right" unique_id=1612967313]
+position = Vector2(-1, 0)
+shape = SubResource("RectangleShape2D_5420t")
 
 [node name="Sprite2D" type="Sprite2D" parent="Right" unique_id=870122344]
 position = Vector2(-1, 0)
-scale = Vector2(0.171875, 1)
-texture = ExtResource("2_5420t")
+texture = ExtResource("5_7q0or")
 
 [node name="RightWall" type="Area2D" parent="." unique_id=1468624917]
 script = ExtResource("4_ploue")
@@ -95,6 +99,10 @@ _bounce_direction = -1
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=1135324047]
 position = Vector2(381.59375, 764)
 shape = SubResource("RectangleShape2D_1gkem")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1290053680]
+stream = ExtResource("7_1gkem")
+autoplay = true
 
 [connection signal="area_entered" from="Left" to="Left" method="_on_area_entered"]
 [connection signal="area_entered" from="Right" to="Right" method="_on_area_entered"]
