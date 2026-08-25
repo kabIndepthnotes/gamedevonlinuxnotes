@@ -1,0 +1,121 @@
+@code_type txt .txt
+@comment_type % %s
+
+@s plan for Gamedev on Linux
+--- stage_directions.txt
+- Show the payoff, the finished game with some music and art
+- Ask around, see if anyone has used linux before, if they enjoy it, if they have done game dev before
+- Introduce yourself
+- install godot, lmms and grafx2 to show all the easy to install FOSS tools
+- install godot, aseprite, reaper Go through the basics of making it centred around creating things
+---
+
+--- install.txt
+use balena-cli as sudo isn't working well with balena gui
+---
+
+
+--- stage_directions.txt +=
+- while balena flashing describe why you have to flash with aseprite diagrams
+---
+
+--- install.txt +=
+# screenkeys
+sudo apt-get install screenkey
+---
+
+@s linux
+
+- Cliquism in Linux and the Windows Community
+- job search "it takes 10 lines to make a folder"
+- game dev indies asks about it
+- Just because I believe linux is one of the best operating systems and *nix is the best type of OS, doesn't mean everyone should.
+- There are use cases for macos and windows
+
+- Use the "try debian option on my usb"
+
+- The type of people who use linux are developers, server administrators and such, therefore a lot of devs look at linux and help fix it
+- Free and Open Source is considered the standard. Almost everything I use I expect to be able to see the source code
+- Installing almost always happens with the package manager, if not then from source
+- Apps tend to be a lot smaller as they are well written (with a lot of eyes on the code)
+
+--- install.txt +=
+# search godot on google and download
+# or go to https://godotengine.org/download/linux/
+# wget https://downloads.godotengine.org/?version=4.7.2&flavor=stable&slug=linux.x86_64.zip&platform=linux.64
+
+apt search grafx2
+sudo apt install grafx2
+
+# search lmms
+# install lmms alpha version
+# consider the github releases as well
+---
+
+# Why Game development on linux?
+## Negatives of developing on linux
+- Most people don't develop on linux, so therefore usually the tools you use will be different which aren't "industry standard"
+- But AAA games aren't selling as well, and indie games are on the rise!
+
+## Positives of developing on linux
+- All the benefits of linux in general
+- Unix as an IDE
+- dwm or a tiling window manager
+- Works well for any sort of development
+- terminal as a first-class citizen
+
+--- stage_directions.txt +=
+- play around with grafx2, make the title screen or banner art
+- play around with lmms, make a song
+---
+
+--- stage_directions.txt +=
+- Talk about the limitations of grafx2 and why you are going now with aseprite
+- Talk about the limitations of lmms and why you are going with reaper
+- Talk about how you can make amazing games with the tools we have covered however my personal preference changes
+
+- Ask if everyone is clear as we are going to get a bit more technican and hands on after this
+---
+
+@s aseprite
+--- install.txt +=
+# google aseprite github
+#
+# explain this works but just to save space there is a better command git clone --recursive https://github.com/aseprite/aseprite.git
+# git clone --depth 1 --recurse-submodules --shallow-submodules https://github.com/aseprite/aseprite.git
+# install dependancies
+sudo apt-get install -y g++ clang cmake ninja-build unzip libx11-dev libxcursor-dev libxi-dev libxrandr-dev libgl1-mesa-dev libfontconfig1-dev
+
+./build.sh
+---
+
+
+@s reaper
+- set soundcard to alsa and input and output to default
+
+--- stage_directions.txt +=
+- Why reaper
+- show tracklib on youtube
+---
+
+
+--- install.txt +=
+- read readme-linux for reaper
+- put into chatgpt and ask to create apt install commands for what to install
+- install
+---
+
+@s pong
+- build our game!
+
+@s pong code
+
+@s TODO
+- Literate Pong to help understand and break it down
+Bullet points of the talk
+
+--- stage_directions.txt +=
+---
+
+--- install.txt +=
+---
