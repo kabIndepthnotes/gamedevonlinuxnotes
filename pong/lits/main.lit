@@ -1,0 +1,113 @@
+@code_type gdscript .gd
+@comment_type # %s
+
+@s main
+
+- make a pong node as root scene
+- 750x750 or web
+
+@s Ball
+- root, area2d
+    - collision shape
+    - sprite
+
+--- ball.gd
+extends Area2D
+
+const DEFAULT_SPEED = 100
+var _speed = DEFAULT_SPEED
+var direction = Vector2.LEFT # go to the left at the start
+@onready var _initial_pos = position
+
+func _process(delta):
+	_speed += delta * 2
+	position += _speed * delta * direction
+
+
+func reset():
+	# direction = Vector2.LEFT
+	direction = Vector2(direction.x,0) # loser starts
+	# direction = Vector2(-direction.x,0) # winner starts
+	position = _initial_pos
+	_speed = DEFAULT_SPEED
+---
+
+We have a ball, so now let's add paddles
+
+@s Paddle
+
+--- paddle.gd
+extends Area2D
+
+const MOVE_SPEED = 100
+
+var _ball_dir
+var _up
+var _down
+
+@onready var _screen_size_y = get_viewport_rect().size.y # allows for responsive (web term) upper/lower bounds
+
+func _ready():
+    # as there are 2 paddles being controlled by the same code
+    # name = the name you give the node in the node tree
+	var n = String(name).to_lower()
+	_up = n + "_move_up"
+	_down = n + "_move_down"
+	if n == "left":
+		_ball_dir = 1
+	else:
+		_ball_dir = -1
+
+
+func _process(delta):
+	# Move up and down based on input.
+	var input = Input.get_action_strength(_down) - Input.get_action_strength(_up) # todo
+	position.y = clamp(position.y + input * MOVE_SPEED * delta, 16, _screen_size_y - 16) # force number to be between 2 values, in this case, 0 < where pos.y will be < screen_size (also account for paddle width is where the 16 comes from)
+
+
+func _on_area_entered(area):
+	if area.name == "Ball":
+		# Assign new direction.
+		area.direction = Vector2(_ball_dir, randf() * 2 - 1).normalized()
+
+---
+
+- set inputs
+`left_move_down`
+`left_move_up`
+`right_move_down`
+`right_move_up`
+
+- signals
+- connect on_area_entered emitted from left to itself
+
+@s walls
+Walls are just area2ds with colshapes
+
+--- wall.gd
+extends Area2D
+
+func _on_wall_area_entered(area):
+	if area.name == "Ball":
+		#oops, ball went out of game place, reset
+		area.reset()
+---
+
+connect signal to itself
+
+@s floor and ceiling
+similar code to wall but instead of reseting we bounce the ball
+
+--- ceiling_floor.gd
+extends Area2D
+
+@export var _bounce_direction = 1
+
+func _on_area_entered(area):
+	if area.name == "Ball":
+		area.direction = (area.direction + Vector2(0, _bounce_direction)).normalized()
+---
+
+set bounce direction to be -1 for floor in export vars
+
+- export to web with the export, get a mirror sorted and local host (python)
